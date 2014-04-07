@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      >
+    <h:body>
+        <ui:composition template="commonLayout.xhtml">
+            <ui:define name="content">
+                <div class="container">
+                    <h2 class="mytitle">Champgen <span class="label label-default">New Player</span></h2>
+                    <h:messages />
+                    <h:form id="newteam-form" class="form-horizontal">
+                        <div class="form-group">
+                            <h:outputLabel value="Name" for="name" class="col-sm-2 control-label" />
+                            <div class="col-sm-3">
+                                <h:inputText value="#{playerBean.name}" id="name" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-3">
+                                <h:commandButton id="btnSubmit" value="New Player" action="#{playerBean.persist()}" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

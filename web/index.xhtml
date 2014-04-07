@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:body>
+        <ui:composition template="commonLayout.xhtml">
+            <!--
+            <ui:define name="header">
+            </ui:define>
+            -->
+            <ui:define name="content">
+                <div class="container">
+                    <!-- <h2 class="mytitle">Champgen <span class="label label-default">Home</span></h2> -->
+
+                    <div class="jumbotron mytitle">
+                        <h1>Welcome to Champgen !</h1>
+                        <p>Use this application to create your championship.</p>
+                        <p>
+                            <c:if test="#{!loginBean.isLoggedIn()}"><a class="btn btn-primary btn-lg" role="button" href="login.xhtml">Login to use Champgen!</a></c:if>
+                        </p>
+                    </div>
+
+                    <h:panelGrid columns="3" border="" width="100%">
+                        <f:facet name="header">
+                            <h:outputText value="Championship list"/>
+                        </f:facet>
+                        <c:forEach items="#{mainController.getAllChampionships()}" var="championship">
+                            <h:panelGroup class="panel panel-default" layout="block" style="margin: 5px">
+                                <div class="panel-heading">Championship Name: <strong><h:outputText value="#{championship.name}" /></strong></div>
+                                <c:if test="#{loginBean.adminLoggedIn}">
+                                    <c:if test="#{championship.getMatchdays().size() == 0}">
+                                        <div class="panel panel-body">
+                                            <h:form>
+                                                <h:commandButton id="btnGenerate" value="Generate Matchdays" action="#{matchdaysGeneratorBean.generateMatchdays(championship)}" class="btn btn-default" />
+                                                
+                                            </h:form>
+                                        </div>
+                                    </c:if>
+                                </c:if>
+                                <h:dataTable value="#{mainController.getOrderedChampionshipTeams(championship)}" var="team" class="table table-striped">
+                                    <h:column>
+                                        <f:facet name="header">Team Name</f:facet>
+                                        <h:outputText value="#{team.name}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Score</f:facet>
+                                        <h:outputText value="#{mainController.getScoreByTeamAndChampionship(team, championship)}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Wins</f:facet>
+                                        <h:outputText value="#{mainController.getWinsByTeamAndChampionship(team, championship)}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Losses</f:facet>
+                                        <h:outputText value="#{mainController.getLossesByTeamAndChampionship(team, championship)}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Draws</f:facet>
+                                        <h:outputText value="#{mainController.getDrawsByTeamAndChampionship(team, championship)}" />
+                                    </h:column>
+                                </h:dataTable>
+                            </h:panelGroup>
+                        </c:forEach>
+                    </h:panelGrid>
+                </div>
+            </ui:define>
+            <!--
+            <ui:define name="footer">    
+            </ui:define>
+            -->
+        </ui:composition>
+    </h:body>
+</html>
+

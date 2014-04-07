@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+          
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <ui:composition template="commonLayout.xhtml">
+            <ui:define name="content">
+                <div class="container">
+                    <h2 class="mytitle">Champgen <span class="label label-default">New Championship</span></h2>
+                    <h:form id="msg"><h:message for="info" id="info" class="alert alert-info" style="display:block" /></h:form>
+                    <h:form id="new-championship-form" class="form-horizontal">
+                        <div class="form-group">
+                            <h:outputLabel value="Championship Name" for="name" class="col-sm-2 control-label" />
+                            <div class="col-sm-3">
+                                <h:inputText value="#{championshipBean.championshipName}" id="name" class="form-control" />
+                            </div>
+                        </div>
+                        <!-- othres properties -->
+                        <!-- ... -->
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-3">
+                                <h:commandButton id="btnSubmit" value="New Championship" action="#{championshipBean.persist()}" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

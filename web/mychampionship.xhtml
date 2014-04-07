@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="commonLayout.xhtml">
+            <ui:define name="content">
+                <div class="container">
+                    <h2 class="mytitle">Champgen <span class="label label-default">Championship</span></h2>
+                    <h:messages />
+                    <c:forEach items="#{scoreBean.searchChampionship()}" var="match">
+                        <c:if test="#{match != null}">
+                            <c:if test="#{scoreBean.isMatchLeaderConnected(match.getTeam1(), match.getTeam2())}">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h:outputText value="#{match.getTeam1().getName()}" />
+                                        <h:outputText value=" - " />
+                                        <h:outputText value="#{match.getTeam2().getName()}" />
+                                    </div>
+                                    <div class="panel-body">
+                                        <c:if test="#{match.getDate() == null}">
+                                            <h:form class="form-horizontal">
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Score #{match.team1.name}" class="col-sm-2 control-label" />
+                                                    <div class="col-sm-3">
+                                                        <h:inputText value="#{scoreBean.scoreTeam1}" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Score #{match.team2.name}" class="col-sm-2 control-label" />
+                                                    <div class="col-sm-3">
+                                                        <h:inputText value="#{scoreBean.scoreTeam2}" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Date" class="col-sm-2 control-label" />
+                                                    <div class="col-sm-3">
+                                                        <h:inputText value="#{scoreBean.date}" class="form-control">
+                                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                                        </h:inputText>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-offset-2 col-sm-3">
+                                                        <h:commandButton value="Set Score and Date" action="#{scoreBean.setScoreAndDate(match)}" class="btn btn-default" />
+                                                    </div>
+                                                </div>
+                                            </h:form>
+                                        </c:if>
+
+                                        <c:if test="#{match.getDate() != null}">
+                                            <h:outputText value="#{match.getTeam1_score()}" />
+                                            <h:outputText value=" - " />
+                                            <h:outputText value="#{match.getTeam2_score()}" />
+                                            <h:outputText value=", has been played #{match.getDate().toString()}" />
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:if test="#{!scoreBean.isMatchLeaderConnected(match.getTeam1(), match.getTeam2())}">
+                                <c:if test="#{match.getDate() != null}">
+                                    <h:outputText value="#{match.getTeam1().getName()}" />
+                                    <h:outputText value=" - " />
+                                    <h:outputText value="#{match.getTeam2().getName()}" />
+                                    
+                                    <h:outputText value=", has been played #{match.getDate().toString()}" /><br />
+                                </c:if>
+                                <c:if test="#{match.getDate() == null}">
+                                    <h:outputText value="#{match.getTeam1().getName()}" />
+                                    <h:outputText value=" - " />
+                                    <h:outputText value="#{match.getTeam2().getName()}" />
+                                    <h:outputText value=", not played" /><br />
+                                </c:if>
+                            </c:if>
+                        </c:if>
+                        <c:if test="#{match == null}">
+                            <h:outputText value="Matchday" />
+                            <hr />
+                        </c:if>
+                    </c:forEach>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

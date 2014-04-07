@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <ui:composition template="commonLayout.xhtml">
+            <ui:define name="content">
+                <div class="container">
+                    <h2 class="mytitle">Champgen <span class="label label-default">
+                            <c:if  test="#{loginBean.isLoggedIn()}">Logout</c:if>
+                            <c:if  test="#{!loginBean.isLoggedIn()}">Login</c:if>
+                        </span></h2>
+                    <h:messages />
+                    <!-- logout form -->
+                    <c:if  test="#{loginBean.isLoggedIn()}">
+                        <div class="alert alert-info">
+                            <strong>Heads up! </strong>
+                            You are logged under <strong>#{loginBean.getUsername()}</strong> with the role: <strong>#{loginBean.getRole()}</strong>
+                            <h:form id="logout-form">
+                                <h:commandLink value="Logout" action="#{loginBean.doLogout()}" class="btn btn-warning" />
+                            </h:form>
+                        </div>
+                    </c:if>
+                    <c:if test="#{!loginBean.isLoggedIn()}">
+                        <div class="alert alert-warning">
+                            <strong>Heads up! </strong>
+                            You are not logged in ! Use the following form to log in.
+                        </div>
+                    </c:if>
+                    <!-- end logout form -->
+                    <c:if  test="#{!loginBean.isLoggedIn()}">
+                    <h:form id="login-form" class="form-horizontal">
+                        <div class="form-group">
+                            <h:outputLabel value="Username" for="username" class="col-sm-2 control-label" />
+                            <div class="col-sm-3">
+                                <h:inputText value="#{loginBean.username}" id="username" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Password" for="password" class="col-sm-2 control-label" />
+                            <div class="col-sm-3">
+                                <h:inputSecret value="#{loginBean.password}" id="password" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-3">
+                                <h:commandButton id="btnSubmit" value="Login" action="#{loginBean.doLogin}" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </h:form>
+                    </c:if>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

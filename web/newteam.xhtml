@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <ui:composition template="commonLayout.xhtml">
+            <ui:define name="content">
+                <div class="container">
+                    <c:if test="#{!teamBean.getAllChampionshipsId().isEmpty()}">
+                    <h2 class="mytitle">Champgen <span class="label label-default">New Team</span></h2>
+                    <h:form id="msg"><h:message for="info" id="info" class="alert alert-info" style="display:block" /></h:form>
+                    <h:form id="newteam-form" class="form-horizontal">
+                        <div class="form-group">
+                            <h:outputLabel value="Championship" for="championship" class="col-sm-2 control-label" />
+                            <div class="col-sm-3">
+                                <!-- <h:inputText value="#{teamBean.championshipId}" id="username" class="form-control" /> -->
+                                <h:selectOneMenu value="#{teamBean.championshipId}">
+                                    <f:selectItems value="#{teamBean.getAllChampionshipsId()}" />
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Team Name" for="team" class="col-sm-2 control-label" />
+                            <div class="col-sm-3">
+                                <h:inputText value="#{teamBean.teamName}" id="team" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Leader Name" for="leader" class="col-sm-2 control-label" />
+                            <div class="col-sm-3">
+                                <h:inputText value="#{teamBean.leaderName}" id="leader" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-3">
+                                <h:commandButton id="btnSubmit" value="New Team" action="#{teamBean.persist()}" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </h:form>
+                    </c:if>
+                    <c:if test="#{teamBean.getAllChampionshipsId().isEmpty()}">
+                    <p></p>
+                        <div class="alert alert-warning">All championships are started, <strong>can't add teams!</strong> <a href="newchampionship.xhtml">Create a championship</a> to add teams!</div>
+                    </c:if>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

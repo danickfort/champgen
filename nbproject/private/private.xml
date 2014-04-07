@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/Users/danick/Development/champgen/web/newteam.xhtml</file>
+            <file>file:/Users/danick/Development/champgen/src/java/managedbeans/ChampionshipBean.java</file>
+            <file>file:/Users/danick/Development/champgen/src/java/facades/ChampionshipFacade.java</file>
+            <file>file:/Users/danick/Development/champgen/src/java/managedbeans/MainController.java</file>
+            <file>file:/Users/danick/Development/champgen/src/java/managedbeans/TeamBean.java</file>
+            <file>file:/Users/danick/Development/champgen/web/newchampionship.xhtml</file>
+            <file>file:/Users/danick/Development/champgen/web/commonHeader.xhtml</file>
+            <file>file:/Users/danick/Development/champgen/web/login.xhtml</file>
+            <file>file:/Users/danick/Development/champgen/web/index.xhtml</file>
+            <file>file:/Users/danick/Development/champgen/web/mychampionship.xhtml</file>
+            <file>file:/Users/danick/Development/champgen/src/java/beans/Championship.java</file>
+            <file>file:/Users/danick/Development/champgen/src/java/managedbeans/PlayerBean.java</file>
+            <file>file:/Users/danick/Development/champgen/src/java/managedbeans/LoginBean.java</file>
+        </group>
+    </open-files>
+</project-private>
