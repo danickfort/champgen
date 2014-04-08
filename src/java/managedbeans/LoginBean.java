@@ -178,6 +178,10 @@ public class LoginBean implements Serializable {
             List<String> roles = new ArrayList<>();
             roles.add("LEADER");
             return currentRoleAllowed(roles);
+        } else if (page.endsWith("player.xhtml")) {
+            List<String> roles = new ArrayList<>();
+            roles.add("PLAYER");
+            return currentRoleAllowed(roles);
         } else {
             return true;
         }
@@ -193,6 +197,10 @@ public class LoginBean implements Serializable {
             List<Route> routes = new ArrayList<>();
             routes.add(new Route("New Player", "newplayer"));
             routes.add(new Route("Championship", "mychampionship"));
+            return routes;
+        } else if (role.equals("PLAYER")) {
+            List<Route> routes = new ArrayList<>();
+            routes.add(new Route("Me", "player"));
             return routes;
         } else {
             List<Route> routes = new ArrayList<>();
