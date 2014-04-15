@@ -44,17 +44,19 @@ public class MatchdaysGeneratorBean {
         String message = "";
 
         if (teamList.size() % 2 == 0) {
-            work(matchdayList, teamList, message, championship);
+            work(matchdayList, teamList, championship);
         } else {
             teamList.add(new Team(-1, message, null, null));
-            work(matchdayList, teamList, message, championship);
+            message = work(matchdayList, teamList, championship);
         }
+        
         FacesMessage msg = new FacesMessage(message, "INFO MSG");
         msg.setSeverity(FacesMessage.SEVERITY_INFO);
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
-    public void work(List<MatchDay> matchdayList, List<Team> teamList, String message, Championship championship) {
+    public String work(List<MatchDay> matchdayList, List<Team> teamList, Championship championship) {
+        String message = " | ";
         List<Team> firstList = new ArrayList<>();
         List<Team> reverseList = new ArrayList<>();
 
@@ -71,7 +73,6 @@ public class MatchdaysGeneratorBean {
             matchDay.setChampionship(championship);
             List<Match> matches = new ArrayList<>();
 
-            message += " ||| MatchDay : ";
             Collections.rotate(firstList, 1);
             Collections.rotate(reverseList, -1);
             Team temp = firstList.get(0);
@@ -86,9 +87,11 @@ public class MatchdaysGeneratorBean {
                 matches.add(match1);
             }            
 
-            message += teamList.get(0).getName() + " vs ";
-            message += reverseList.get(0).getName();
-            message += " /// ";
+            if (!("".equals(teamList.get(0).getName())) && !("".equals(reverseList.get(0).getName()))) {
+                message += teamList.get(0).getName() + " vs ";
+                message += reverseList.get(0).getName();
+                message += " | ";
+            }
 
             for (int j = 0; j < teamList.size() / 2 - 1; j++) {
                 if (firstList.get(j).getId() == -1 || reverseList.get(j + 1).getId() == -1) {
@@ -101,15 +104,20 @@ public class MatchdaysGeneratorBean {
 
                 // match.setMatchDay(matchday);
                 matches.add(match);
-
-                message += firstList.get(j).getName() + " vs ";
-                message += reverseList.get(j + 1).getName();
-                message += " /// ";
+                
+                if (!("".equals(firstList.get(j).getName())) && !("".equals(reverseList.get(j + 1).getName()))) {
+                    message += firstList.get(j).getName() + " vs ";
+                    message += reverseList.get(j + 1).getName();
+                    message += " | ";
+                }
+                
             }
 
             // save the matchday
             matchDay.setMatches(matches);
             mainController.persistMatchday(matchDay);
         }
+        
+        return message;
     }
 }
