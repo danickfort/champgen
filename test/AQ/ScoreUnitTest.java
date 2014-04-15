@@ -15,6 +15,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
@@ -62,7 +63,7 @@ public class ScoreUnitTest {
     driver.findElement(By.id("newteam-form:leader")).sendKeys("leader3");
     driver.findElement(By.id("newteam-form:btnSubmit")).click();
     driver.findElement(By.linkText("Champgen")).click();
-    driver.findElement(By.id("j_idt38:btnGenerate")).click();
+    driver.findElement(By.cssSelector("input.btn.btn-default")).click();
     driver.findElement(By.linkText("Logout")).click();
     driver.findElement(By.cssSelector("a.btn.btn-warning")).click();
     driver.findElement(By.id("login-form:username")).clear();
