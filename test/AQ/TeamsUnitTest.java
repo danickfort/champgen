@@ -33,7 +33,11 @@ public class TeamsUnitTest {
         this.baseUrl = "http://localhost:8080";
 
         this.webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        DataBaseTool.restartDB();
+        //DataBaseTool.restartDB();
+        try {
+        DataBaseTool.executeSQLfromFile("emptyDB.sql");
+        }
+        catch (Exception e) { e.printStackTrace(); }
     }
 
     @Test

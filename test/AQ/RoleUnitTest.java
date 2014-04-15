@@ -64,7 +64,8 @@ public class RoleUnitTest {
     private void pause(int secondes) {
         if (DO_PAUSE) {
             try {
-                Thread.sleep(secondes * 1000);
+                webDriver.manage().timeouts().implicitlyWait(secondes, TimeUnit.SECONDS);
+                Thread.sleep(secondes * 100);
             } catch (Exception e) {
             }
         }

@@ -4,6 +4,9 @@
  */
 package AQ;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,8 +17,7 @@ import java.sql.Statement;
  * @author garynietlispach
  */
 public class DataBaseTool {
-    
-    public static void restartDB()
+    private static Statement getStatement() throws Exception
     {
         Connection con = null;
         String url = "jdbc:mysql://localhost:3306/";
@@ -23,28 +25,24 @@ public class DataBaseTool {
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
         String pass = "root";
-        try{
         Class.forName(driver).newInstance();
         con = DriverManager.getConnection(url+db, user, pass);
-        Statement st = con.createStatement();
-        st.executeUpdate("SET FOREIGN_KEY_CHECKS=0;");
-        st.executeUpdate("TRUNCATE TABLE championship;");
-        st.executeUpdate("TRUNCATE TABLE game;");
-        st.executeUpdate("TRUNCATE TABLE matchday;");
-        st.executeUpdate("TRUNCATE TABLE user;");
-        st.executeUpdate("TRUNCATE TABLE team;");
-        st.executeUpdate("TRUNCATE TABLE user_group;");
-        st.executeUpdate("SET FOREIGN_KEY_CHECKS=1;");
-        st.executeUpdate("INSERT INTO user(password, username) VALUES(\"admin\", \"admin\");");
-        st.executeUpdate("INSERT INTO user_group(groupName, user_id) VALUES(\"ADMIN\", 1);");
-        
+        return  con.createStatement();
+    }
+    
+    public static void executeSQLfromFile(String fileName) throws Exception
+    {
+        BufferedReader in = new BufferedReader(new FileReader(fileName));
+        Statement stmt = getStatement();
+        String str;
+        StringBuilder sb = new StringBuilder();
+        while ((str = in.readLine()) != null) {
+            sb.append(str + "\n");
         }
-        catch (SQLException s){
-        System.out.println("SQL code does not execute.");
-        }  
-        catch (Exception e){
-        e.printStackTrace();
-        }
+        String[] commands = sb.toString().split("\n");
+        in.close();
+        for (String command : commands)
+            stmt.executeUpdate(command);
     }
     
 }
