@@ -32,7 +32,11 @@ public class GenerateMatchdaysTest {
 
         this.webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         
-        DataBaseTool.restartDB();
+        try {
+            DataBaseTool.executeSQLfromFile("emptyDB.sql");
+        }
+        catch (Exception e)
+        {}
     }
 
     @Test
