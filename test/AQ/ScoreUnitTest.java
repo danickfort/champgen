@@ -72,13 +72,13 @@ public class ScoreUnitTest {
     driver.findElement(By.id("login-form:password")).sendKeys("password");
     driver.findElement(By.id("login-form:btnSubmit")).click();
     driver.findElement(By.linkText("Championship")).click();
-    driver.findElement(By.name("j_idt39:j_idt43")).clear();
-    driver.findElement(By.name("j_idt39:j_idt43")).sendKeys("1");
-    driver.findElement(By.name("j_idt39:j_idt47")).clear();
-    driver.findElement(By.name("j_idt39:j_idt47")).sendKeys("2");
-    driver.findElement(By.name("j_idt39:j_idt51")).clear();
-    driver.findElement(By.name("j_idt39:j_idt51")).sendKeys("13-04-2014");
-    driver.findElement(By.name("j_idt39:j_idt53")).click();
+    driver.findElements(By.tagName("input")).get(1).clear();
+    driver.findElements(By.tagName("input")).get(1).sendKeys("1");
+    driver.findElements(By.tagName("input")).get(2).clear();
+    driver.findElements(By.tagName("input")).get(2).sendKeys("2");
+    driver.findElements(By.tagName("input")).get(3).clear();
+    driver.findElements(By.tagName("input")).get(3).sendKeys("13-04-2014");
+    driver.findElements(By.tagName("input")).get(4).click();
     // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*1 - 2, has been played 2014-04-13[\\s\\S]*$"));
