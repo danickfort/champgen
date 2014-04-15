@@ -33,6 +33,7 @@ public class TeamsUnitTest {
         this.baseUrl = "http://localhost:8080";
 
         this.webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        DataBaseTool.restartDB();
     }
 
     @Test
@@ -69,7 +70,7 @@ public class TeamsUnitTest {
         
         int rowCount=webDriver.findElements(By.xpath("//table/tbody/tr")).size();
         System.out.println(rowCount);
-        assertTrue(rowCount==3);
+        assertTrue(rowCount==noTeams+1); // + 1 because title is counted as row
         
         this.pause(TIME_TO_PAUSE);
     }
