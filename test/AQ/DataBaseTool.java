@@ -44,5 +44,4 @@ public class DataBaseTool {
         for (String command : commands)
             stmt.executeUpdate(command);
     }
-    
 }
