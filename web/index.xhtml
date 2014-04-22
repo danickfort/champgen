@@ -24,7 +24,7 @@
                         <h1>Welcome to Champgen !</h1>
                         <p>Use this application to create your championship.</p>
                         <p>
-                            <c:if test="#{!loginBean.isLoggedIn()}"><a class="btn btn-primary btn-lg" role="button" href="login.xhtml">Login to use Champgen!</a></c:if>
+                            <c:if test="#{!loginBean.isLoggedIn()}"><h:button class="btn btn-primary btn-lg" value="Login to use Champgen" outcome="login" /></c:if>
                         </p>
                     </div>
                     <h:messages />
