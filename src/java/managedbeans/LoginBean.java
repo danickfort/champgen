@@ -14,6 +14,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
 import utils.Route;
 
 /**
@@ -31,10 +33,17 @@ public class LoginBean implements Serializable {
     private String passwordPrev;
     private boolean loggedIn;
     private String role;
+    // to change password leader or player
+    @NotEmpty
+    private String currentPassword;
+    @NotEmpty
+    private String newPassword1;
+    @NotEmpty
+    private String newPassword2;
     
     @ManagedProperty(value = "#{mainController}")
     private MainController mainController;
-    
+
     public LoginBean() {
         this.id = -1;
         this.username = "";
@@ -46,14 +55,38 @@ public class LoginBean implements Serializable {
     /**
      * Getters and setters
      */
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+
+    public String getNewPassword1() {
+        return newPassword1;
+    }
+
+    public String getNewPassword2() {
+        return newPassword2;
+    }
+
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
+
+    public void setNewPassword1(String newPassword1) {
+        this.newPassword1 = newPassword1;
+    }
+
+    public void setNewPassword2(String newPassword2) {
+        this.newPassword2 = newPassword2;
+    }
+
     public int getId() {
         return this.id;
     }
-    
+
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getUsername() {
         return this.username;
     }
@@ -89,7 +122,7 @@ public class LoginBean implements Serializable {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
-    
+
     public boolean isAdminLoggedIn() {
         if (this.isLoggedIn() && this.role.equals("ADMIN")) {
             return true;
@@ -100,32 +133,48 @@ public class LoginBean implements Serializable {
     /**
      * Methods
      */
+    public void changePassword() {
+        String message = "";
+        
+        if (this.password.equals(this.currentPassword) && this.newPassword1.equals(this.newPassword2)) {
+            this.mainController.updatePassword(this.id, this.newPassword1);
+            this.password = this.newPassword1;
+            message = "Success, your new password is " + this.newPassword1;
+        } else {
+            message = "Error !";
+        }
+
+        FacesMessage msg = new FacesMessage(message, "INFO MSG");
+        msg.setSeverity(FacesMessage.SEVERITY_INFO);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
     public String doLogin() {
         List<User> user = this.mainController.getUserByUsernameAndPassword(this.username, this.password);
         if (!user.isEmpty()) {
             this.loggedIn = true;
-            
+
             User userLogged = user.get(0);
-            
+
             List<UserGroup> userGroup = this.mainController.getRoleByUser(userLogged);
-            
+
             UserGroup userGroupLogged = userGroup.get(0);
-            
+
             this.id = userLogged.getId();
             this.role = userGroupLogged.getGroupName();
-            
+
             this.usernamePrev = this.username;
             this.passwordPrev = this.password;
 
             FacesMessage msg = new FacesMessage("Login sucess ! Role: " + this.role, "INFO MSG");
             msg.setSeverity(FacesMessage.SEVERITY_INFO);
             FacesContext.getCurrentInstance().addMessage(null, msg);
-            
+
             return "login.xhtml";
         } else {
             this.username = this.usernamePrev;
             this.password = this.passwordPrev;
-            
+
             FacesMessage msg = new FacesMessage("Login failed !", "INFO MSG");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -146,7 +195,7 @@ public class LoginBean implements Serializable {
 
         return "login.xhtml";
     }
-    
+
     private boolean currentRoleAllowed(List<String> roles) {
         if (isLoggedIn()) {
             for (String r : roles) {
@@ -157,10 +206,10 @@ public class LoginBean implements Serializable {
         } else {
             return false;
         }
-        
+
         return false;
     }
-    
+
     public boolean isAccessAllowed(String page) {
         if (page.endsWith("newchampionship.xhtml")) {
             List<String> roles = new ArrayList<>();
@@ -182,11 +231,16 @@ public class LoginBean implements Serializable {
             List<String> roles = new ArrayList<>();
             roles.add("PLAYER");
             return currentRoleAllowed(roles);
+        } else if (page.endsWith("changepassword.xhtml")) {
+            List<String> roles = new ArrayList<>();
+            roles.add("LEADER");
+            roles.add("PLAYER");
+            return currentRoleAllowed(roles);
         } else {
             return true;
         }
     }
-    
+
     public List<Route> getRoutesByRole() {
         if (role.equals("ADMIN")) {
             List<Route> routes = new ArrayList<>();
@@ -197,10 +251,12 @@ public class LoginBean implements Serializable {
             List<Route> routes = new ArrayList<>();
             routes.add(new Route("New Player", "newplayer"));
             routes.add(new Route("Championship", "mychampionship"));
+            routes.add(new Route("Change password", "changepassword"));
             return routes;
         } else if (role.equals("PLAYER")) {
             List<Route> routes = new ArrayList<>();
             routes.add(new Route("Me", "player"));
+            routes.add(new Route("Change password", "changepassword"));
             return routes;
         } else {
             List<Route> routes = new ArrayList<>();

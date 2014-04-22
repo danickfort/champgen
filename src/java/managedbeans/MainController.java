@@ -18,10 +18,14 @@ import facades.UserFacade;
 import facades.UserGroupFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
+import javax.persistence.Query;
 
 /**
  *
@@ -43,8 +47,43 @@ public class MainController implements Serializable {
     private MatchDayFacade matchdayFacade;
     @EJB
     private MatchFacade matchFacade;
+    
+    /*
+    private int pageIndex;
 
     public MainController() {
+        this.pageIndex = 0;
+    }
+    
+    public int getPageIndex() {
+        return this.pageIndex;
+    }
+    
+    public void setPageIndex(int pageIndex) {
+        this.pageIndex = pageIndex;
+    }
+    */
+    
+    public List<Championship> paginate(int pageIndex) {
+        return this.championshipFacade.paginate(pageIndex);
+    }
+    
+    public List<Integer> countChampionship() {
+        int numberOfChampionships = championshipFacade.count();
+        if (numberOfChampionships % 3 != 0) {
+            numberOfChampionships = numberOfChampionships / 3 + 1;
+        } else {
+            numberOfChampionships = numberOfChampionships / 3;
+        }
+        List<Integer> temp = new ArrayList<>();
+        for (int i = 1; i <= numberOfChampionships; i++) {
+            temp.add(i);
+        }
+        return temp;
+    }
+    
+    public int updatePassword(int userId, String password) {
+        return userFacade.updatePassword(userId, password);
     }
 
     public List<User> getAllUser() {

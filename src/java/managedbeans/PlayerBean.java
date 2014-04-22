@@ -99,6 +99,7 @@ public class PlayerBean {
             matches.addAll(matchday.getMatches());
         }
         playerEnv.put("matches", matches);
+        playerEnv.put("team", currentPlayer.getTeam().getName());
     }
     
     private void buildPlayerEnv() {
@@ -108,7 +109,7 @@ public class PlayerBean {
     
     public List<Match> getMatches() {
         buildPlayerEnv();
-        
+        getPlayerEnv();
         return (List<Match>)playerEnv.get("matches");
     }
     
@@ -122,5 +123,9 @@ public class PlayerBean {
         buildPlayerEnv();
         
         return (String)playerEnv.get("championshipName");
+    }
+    
+    public String getTeamName() {
+        return (String)playerEnv.get("team");
     }
 }

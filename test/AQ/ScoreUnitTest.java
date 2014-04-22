@@ -39,7 +39,7 @@ public class ScoreUnitTest {
 
   @Test
   public void testJunit() throws Exception {
-    driver.get(baseUrl + "/champgen/faces/index.xhtml");
+    driver.get(baseUrl + "champgen/faces/index.xhtml");
     driver.findElement(By.linkText("Login")).click();
     driver.findElement(By.id("login-form:username")).clear();
     driver.findElement(By.id("login-form:username")).sendKeys("admin");

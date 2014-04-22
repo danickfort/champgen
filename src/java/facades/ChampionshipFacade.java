@@ -17,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ChampionshipFacade extends AbstractFacade<Championship> {
+
     @PersistenceContext(unitName = "champgenPU")
     private EntityManager em;
 
@@ -28,9 +29,17 @@ public class ChampionshipFacade extends AbstractFacade<Championship> {
     public ChampionshipFacade() {
         super(Championship.class);
     }
-    
+
     public List<Team> getTeams(Championship championship) {
         return em.createNamedQuery("Team.findTeams").setParameter("championship", championship).getResultList();
     }
-    
+
+    public List<Championship> paginate(int pageIndex) {
+        if (pageIndex > 0) {
+            pageIndex = pageIndex - 1;
+        }
+        return em.createNamedQuery("Championship.findAll")
+                .setMaxResults(3)
+                .setFirstResult(pageIndex * 3).getResultList();
+    }
 }

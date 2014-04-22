@@ -7,7 +7,7 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-          
+
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:body>
         <ui:composition template="commonLayout.xhtml">
@@ -15,23 +15,48 @@ and open the template in the editor.
                 <div class="container">
                     <h2 class="mytitle">Champgen <span class="label label-default">Player</span></h2>
                     <p>
-                        Championship: 
+                        <strong>Championship: </strong>
                         <h:outputText value="#{playerBean.getChampionshipName()}" />
                     </p>
                     <p>
-                        Leader: 
+                        <strong>Team: </strong> 
+                        <h:outputText value="#{playerBean.getTeamName()}" />
+                    </p>
+                    <p>
+                        <strong>Leader: </strong> 
                         <h:outputText value="#{playerBean.getLeaderName()}" />
                     </p>
-                    <h3>Matches</h3>
-                    <c:forEach items="#{playerBean.getMatches()}" var="match">
-                        <p>
-                        <h:outputText value="#{match.team1.name}" /> - 
-                        <h:outputText value="#{match.team2.name}" /> / 
-                        <h:outputText value="#{match.team1_score}" /> - 
-                        <h:outputText value="#{match.team2_score}" /> / 
-                        <h:outputText value="#{match.date}" />
-                        </p>
-                    </c:forEach>
+                    <h3>List of matches</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Match</th>
+                                <th>Score</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="#{playerBean.getMatches()}" var="match">
+                                <tr>
+                                    <c:choose>
+                                        <c:when test="#{match.date == null}">
+                                            <td><h:outputText value="#{match.team1.name}" /> - 
+                                                <h:outputText value="#{match.team2.name}" /></td><td>
+                                                <h:outputText value="Match not played" /></td>
+                                            <td><h:outputText value="Match not played" /></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td><h:outputText value="#{match.team1.name}" /> - 
+                                                <h:outputText value="#{match.team2.name}" /></td><td> ( 
+                                                <h:outputText value="#{match.team1_score}" /> - 
+                                                <h:outputText value="#{match.team2_score}" /> ) </td>
+                                            <td><h:outputText value="#{match.date}" /></td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </ui:define>
         </ui:composition>

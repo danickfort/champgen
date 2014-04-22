@@ -7,6 +7,9 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <f:metadata>
+        <f:viewParam name="pageIndex" value="#{mainController.pageIndex}"/>
+    </f:metadata>
     <h:body>
         <ui:composition template="commonLayout.xhtml">
             <!--
@@ -29,7 +32,7 @@
                         <f:facet name="header">
                             <h:outputText value="Championship list"/>
                         </f:facet>
-                        <c:forEach items="#{mainController.getAllChampionships()}" var="championship">
+                        <c:forEach items="#{mainController.paginate(param['pageIndex'])}" var="championship">
                             <h:panelGroup class="panel panel-default" layout="block" style="margin: 5px">
                                 <div class="panel-heading">Championship Name: <strong><h:outputText value="#{championship.name}" /></strong></div>
                                 <c:if test="#{loginBean.adminLoggedIn}">
@@ -37,7 +40,7 @@
                                         <div class="panel panel-body">
                                             <h:form>
                                                 <h:commandButton id="btnGenerate" value="Generate Matchdays" action="#{matchdaysGeneratorBean.generateMatchdays(championship)}" class="btn btn-default" />
-                                                
+
                                             </h:form>
                                         </div>
                                     </c:if>
@@ -67,6 +70,28 @@
                             </h:panelGroup>
                         </c:forEach>
                     </h:panelGrid>
+                    <div class="text-center">
+                        <ul class="pagination pagination-centered">
+                            <c:forEach items="#{mainController.countChampionship()}" var="pageIndex">
+                                <c:choose>
+                                    <c:when test="#{pageIndex == param['pageIndex']}">
+                                        <li class="active">
+                                            <h:link value="#{pageIndex}" outcome="index" >
+                                                <f:param name="pageIndex" value="#{pageIndex}" />
+                                            </h:link>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li>
+                                            <h:link value="#{pageIndex}" outcome="index" >
+                                                <f:param name="pageIndex" value="#{pageIndex}" />
+                                            </h:link>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </ul>
+                    </div>
                 </div>
             </ui:define>
             <!--
