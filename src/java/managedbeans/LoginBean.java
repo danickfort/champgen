@@ -139,14 +139,14 @@ public class LoginBean implements Serializable {
         if (this.password.equals(this.currentPassword) && this.newPassword1.equals(this.newPassword2)) {
             this.mainController.updatePassword(this.id, this.newPassword1);
             this.password = this.newPassword1;
-            message = "Success, your new password is " + this.newPassword1;
+            message = "Success, your password was changed!";
         } else {
             message = "Error !";
         }
 
-        FacesMessage msg = new FacesMessage(message, "INFO MSG");
+        FacesMessage msg = new FacesMessage(message);
         msg.setSeverity(FacesMessage.SEVERITY_INFO);
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().addMessage("msg:info", msg);
     }
 
     public String doLogin() {
@@ -166,18 +166,18 @@ public class LoginBean implements Serializable {
             this.usernamePrev = this.username;
             this.passwordPrev = this.password;
 
-            FacesMessage msg = new FacesMessage("Login sucess ! Role: " + this.role, "INFO MSG");
+            FacesMessage msg = new FacesMessage("Login sucess ! Role: " + this.role);
             msg.setSeverity(FacesMessage.SEVERITY_INFO);
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().addMessage("msg:info", msg);
 
             return "login.xhtml";
         } else {
             this.username = this.usernamePrev;
             this.password = this.passwordPrev;
 
-            FacesMessage msg = new FacesMessage("Login failed !", "INFO MSG");
+            FacesMessage msg = new FacesMessage("Login failed !");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().addMessage("msg2:info", msg);
 
             return "login.xhtml";
         }
@@ -189,9 +189,9 @@ public class LoginBean implements Serializable {
         this.loggedIn = false;
         this.role = "";
 
-        FacesMessage msg = new FacesMessage("Logout success !", "INFO MSG");
+        FacesMessage msg = new FacesMessage("Logout success !");
         msg.setSeverity(FacesMessage.SEVERITY_INFO);
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().addMessage("msg:info", msg);
 
         return "login.xhtml";
     }

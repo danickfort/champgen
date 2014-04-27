@@ -15,7 +15,7 @@ and open the template in the editor.
             <ui:define name="content">
                 <div class="container">
                     <h2 class="mytitle">Champgen <span class="label label-default">Championship</span></h2>
-                    <h:messages />
+                    <h:form id="msg"><h:message for="info" id="info" class="alert alert-info" style="display:block" /></h:form>
                     <c:forEach items="#{scoreBean.searchChampionship()}" var="match">
                         <c:if test="#{match != null}">
                             <c:if test="#{scoreBean.isMatchLeaderConnected(match.getTeam1(), match.getTeam2())}">

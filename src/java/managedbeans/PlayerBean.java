@@ -80,9 +80,13 @@ public class PlayerBean {
         mainController.persistUser(newplayer);
         mainController.persistUserGroup(newUserGroup);
         
-        FacesMessage msg = new FacesMessage("New player added !", "INFO MSG");
+        FacesMessage msg = new FacesMessage("New player added !");
         msg.setSeverity(FacesMessage.SEVERITY_INFO);
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().addMessage("msg:info", msg);
+        
+        FacesMessage msg2 = new FacesMessage("Beware, the new player's password is password");
+        msg2.setSeverity(FacesMessage.SEVERITY_INFO);
+        FacesContext.getCurrentInstance().addMessage("msg2:warning", msg2);
     }
     
     private void getPlayerEnv() {
