@@ -20,7 +20,6 @@ public class RoleUnitTest {
 
     private WebDriver webDriver;
     private String baseUrl;
-    
     private static final int TIME_TO_PAUSE = 2;
     private static final boolean DO_PAUSE = true;
 
@@ -28,6 +27,11 @@ public class RoleUnitTest {
     public void setUp() {
         this.webDriver = new ChromeDriver();
         this.baseUrl = "http://localhost:8080/champgen";
+
+        try {
+            DataBaseTool.executeSQLfromFile("emptyDB.sql");
+        } catch (Exception e) {
+        }
 
         this.webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
@@ -38,26 +42,26 @@ public class RoleUnitTest {
         this.pause(TIME_TO_PAUSE);
         this.webDriver.get(this.baseUrl + "/faces/newchampionship.xhtml");
         this.pause(TIME_TO_PAUSE);
-        
+
         String currentUrl = this.webDriver.getCurrentUrl();
         org.junit.Assert.assertTrue(currentUrl.endsWith("login.xhtml"));
-        
+
         // login
         this.webDriver.findElement(By.id("login-form:username")).sendKeys("admin");
         this.webDriver.findElement(By.id("login-form:password")).sendKeys("admin");
-        
+
         this.pause(TIME_TO_PAUSE);
-        
+
         this.webDriver.findElement(By.id("login-form:btnSubmit")).click();
-        
+
         this.pause(TIME_TO_PAUSE);
-        
+
         this.webDriver.get(this.baseUrl + "/faces/newchampionship.xhtml");
         this.pause(TIME_TO_PAUSE);
-        
+
         currentUrl = this.webDriver.getCurrentUrl();
         org.junit.Assert.assertTrue(currentUrl.endsWith("newchampionship.xhtml"));
-        
+
         this.pause(TIME_TO_PAUSE);
     }
 

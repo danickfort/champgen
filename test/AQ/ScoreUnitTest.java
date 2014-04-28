@@ -29,11 +29,10 @@ public class ScoreUnitTest {
   public void setUp() {
     driver = new FirefoxDriver();
     baseUrl = "http://localhost:8080/";
-            try {
-            DataBaseTool.executeSQLfromFile("emptyDB.sql");
-        }
-        catch (Exception e)
-        {}
+      try {
+          DataBaseTool.executeSQLfromFile("emptyDB.sql");
+      } catch (Exception e) {
+      }
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
