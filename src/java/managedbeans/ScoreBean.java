@@ -98,13 +98,14 @@ public class ScoreBean {
 
         this.mainController.updateMatch(match);
 
-        this.scoreTeam1 = 0;
-        this.scoreTeam2 = 0;
         this.date = new Date();
 
-        FacesMessage msg = new FacesMessage("Match with match id : " + match.getId() + " edit successfull !", "INFO MSG");
+        FacesMessage msg = new FacesMessage("" + match.getTeam1().getName() + "" + " vs " + "" + match.getTeam2().getName() + " ended with a score of" + " " + scoreTeam1 + " - " + scoreTeam2);
         msg.setSeverity(FacesMessage.SEVERITY_INFO);
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().addMessage("msg:info", msg);
+        
+        this.scoreTeam1 = 0;
+        this.scoreTeam2 = 0;
     }
 
     public boolean isMatchLeaderConnected(Team team1, Team team2) {

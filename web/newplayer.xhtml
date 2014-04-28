@@ -13,7 +13,8 @@ and open the template in the editor.
             <ui:define name="content">
                 <div class="container">
                     <h2 class="mytitle">Champgen <span class="label label-default">New Player</span></h2>
-                    <h:messages />
+                    <h:form id="msg"><h:message for="info" id="info" class="alert alert-info" style="display:block" /></h:form>
+                    <h:form id="msg2"><h:message for="warning" id="warning" class="alert alert-warning" style="display:block" /></h:form>
                     <h:form id="newteam-form" class="form-horizontal">
                         <div class="form-group">
                             <h:outputLabel value="Name" for="name" class="col-sm-2 control-label" />

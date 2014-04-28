@@ -114,8 +114,12 @@ public class TeamBean {
         newLeader.setTeamOwn(newTeam);
         mainController.updateUser(newLeader);
         
-        FacesMessage msg = new FacesMessage("Team " + teamName + " added !", "Team " + teamName + " added !");
+        FacesMessage msg = new FacesMessage("Team " + teamName + " added !");
         msg.setSeverity(FacesMessage.SEVERITY_ERROR);
         FacesContext.getCurrentInstance().addMessage("msg:info", msg);
+        
+        FacesMessage msg2 = new FacesMessage("Leader " + leaderName + " added with password : password");
+        msg2.setSeverity(FacesMessage.SEVERITY_ERROR);
+        FacesContext.getCurrentInstance().addMessage("msg2:warning", msg2);
     }
 }

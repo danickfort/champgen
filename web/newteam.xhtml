@@ -16,6 +16,7 @@ and open the template in the editor.
                     <c:if test="#{!teamBean.getAllChampionshipsId().isEmpty()}">
                     <h2 class="mytitle">Champgen <span class="label label-default">New Team</span></h2>
                     <h:form id="msg"><h:message for="info" id="info" class="alert alert-info" style="display:block" /></h:form>
+                    <h:form id="msg2"><h:message for="warning" id="warning" class="alert alert-warning" style="display:block" /></h:form>
                     <h:form id="newteam-form" class="form-horizontal">
                         <div class="form-group">
                             <h:outputLabel value="Championship" for="championship" class="col-sm-2 control-label" />
